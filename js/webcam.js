@@ -1,32 +1,30 @@
-const captureVideoButton =
-  document.querySelector('#screenshot .capture-button');
-const screenshotButton = document.querySelector('#screenshot-button');
-// const img = document.querySelector('#screenshot img');
+// Set up video and DOM variables
 const div = document.getElementById('screenshot');
 const video = document.querySelector('#screenshot video');
-
 const canvas = document.createElement('canvas');
+let timer;
 
-captureVideoButton.onclick = function() {
-  console.log('click');
+// Initialize camera on page load
+const init = () => {
+  console.log('init!');
   navigator.mediaDevices.getUserMedia({video: true}).
     then(handleSuccess).catch(handleError);
-};
+}
 
-screenshotButton.onclick = video.onclick = function() {
+// Take video and set up screenshot timer
+const handleSuccess = (stream) => {
+  video.srcObject = stream;
+  timer = setInterval(() => {takeScreenshot()}, 1000);
+}
+
+// Take video feed and insert images into DOM
+const takeScreenshot = () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0);
-  var img = new Image();
-  // Other browsers will fall back to image/png
+  const img = new Image();
   img.src = canvas.toDataURL('image/webp');
-  // div.appendChild(img);
   div.insertBefore(img, div.childNodes[0])
-};
-
-const handleSuccess = (stream) => {
-  screenshotButton.disabled = false;
-  video.srcObject = stream;
 }
 
 const handleError = error => console.error('error:', error);
