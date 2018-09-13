@@ -1,3 +1,9 @@
-# webcam
+# Dark Coding Challenge
 
-## Super simple Webcam screenshot app!
+## Author
+
+**Vanessa Archambault** - <varch02@gmail.com>
+
+Super simple Webcam screenshot app!
+
+To run: simply open [index.html](index.html) in browser
